@@ -66,8 +66,6 @@ mysql:
   encoding: utf8
 
 before_install:
-  # Add the oauth token to prevent GitHub timeouts.
-  - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
   - composer self-update
   - composer global require "hirak/prestissimo:^0.3"
   - composer global require "lionsad/drupal_ti:dev-master"
