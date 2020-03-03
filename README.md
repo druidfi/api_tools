@@ -1,6 +1,6 @@
 # Druidfi API Tools
 
-[![Build Status](https://travis-ci.com/druidfi/druidfi_api_tools.svg?branch=8.x-1.x)](https://travis-ci.com/druidfi/druidfi_api_tools)
+[![Build Status](https://travis-ci.com/druidfi/druidfi_api_tools.svg?token=txWjcLf9KNyHm6qjUdsB&branch=8.x-1.x)](https://travis-ci.com/druidfi/druidfi_api_tools)
 
 ## Usage
 
