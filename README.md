@@ -79,34 +79,14 @@ namespace Drupal\yourmodule\Response;
 
 use Drupal\druidfi_api_tools\Response\SuccessResponse;
 
-/**
- * Provides an example response.
- */
 final class ExampleResponse extends SuccessResponse {
 
-  /**
-   * The entities.
-   *
-   * @var array
-   */
   protected $entities = [];
 
-  /**
-   * Constructs a new instance.
-   *
-   * @param \stdClass[] $entities
-   *   The entities.
-   */
   public function __construct(array $entities) {
     $this->entities = $entities;
   }
 
-  /**
-   * Gets the entities.
-   *
-   * @return array|\stdClass[]
-   *   The entities.
-   */
   public function getEntities() : array {
     return $this->entities;
   }
