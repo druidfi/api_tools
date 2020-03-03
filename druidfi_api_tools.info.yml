@@ -1,0 +1,6 @@
+name: 'Druidfi API tools'
+description: ''
+type: module
+core: 8.x
+package: 'Custom'
+php: 7.2

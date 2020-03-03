@@ -1,0 +1,16 @@
+services:
+  logger.channel.druidfi_api_tools:
+    parent: logger.channel_base
+    arguments: ['druidfi_api_tools']
+
+  plugin.manager.druidfi_api_tools.rest.api_request_manager:
+    class: Drupal\druidfi_api_tools\Rest\ApiRequestPluginManager
+    parent: default_plugin_manager
+
+  druidfi_api_tools.rest.api_manager:
+    class: Drupal\druidfi_api_tools\Rest\ApiManager
+    arguments: ['@http_client', '@logger.channel.druidfi_api_tools']
+
+  druidfi_api_tools.rest.request_factory:
+    class: Drupal\druidfi_api_tools\Rest\RequestFactory
+    arguments: ['@plugin.manager.druidfi_api_tools.rest.api_request_manager']
