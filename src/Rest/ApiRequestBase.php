@@ -12,7 +12,7 @@ use Generator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Base class for api_tools.api_request_manager plugins.
+ * Base class for rest request plugins.
  */
 abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPluginInterface {
 
@@ -21,7 +21,7 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
    *
    * @var \Drupal\api_tools\Rest\ApiManager
    */
-  protected $apiManager;
+  protected ApiManager $apiManager;
 
   /**
    * Constructs a new instance.
@@ -54,14 +54,36 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
   }
 
   /**
-   * {@inheritdoc}
+   * Sends and processes a single request.
+   *
+   * @param \Drupal\api_tools\Request\Request $request
+   *   The request to send.
+   * @param callable $callback
+   *   The callback to process response.
+   *
+   * @return \Drupal\api_tools\Response\Response
+   *   The response.
+   *
+   * @throws \Drupal\api_tools\Exception\ErrorResponseException
    */
   public function request(Request $request, callable $callback) : Response {
     return $this->requestMultiple([$request], $callback)->current();
   }
 
   /**
-   * {@inheritdoc}
+   * Sends and processes multiple requests.
+   *
+   * @phpcs:disable Drupal.Commenting.FunctionComment.InvalidNoReturn
+   *
+   * @param \Drupal\api_tools\Request\Request[] $requests
+   *   The requests.
+   * @param callable $callback
+   *   The callback to process responses.
+   *
+   * @yield \Drupal\api_tools\Response\Response[]
+   *   The response.
+   *
+   * @throws \Drupal\api_tools\Exception\ErrorResponseException
    */
   public function requestMultiple(array $requests, callable $callback): Generator {
     $promises = [];

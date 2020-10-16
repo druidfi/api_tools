@@ -16,14 +16,14 @@ class Request {
    *
    * @var string
    */
-  protected $method = 'GET';
+  protected string $method = 'GET';
 
   /**
    * The uri.
    *
    * @var \League\Uri\Contracts\UriInterface
    */
-  protected $uri;
+  protected UriInterface $uri;
 
   /**
    * The request options.
@@ -32,7 +32,7 @@ class Request {
    *
    * @see \GuzzleHttp\Client::requestAsync()
    */
-  protected $options = [];
+  protected array $options = [];
 
   /**
    * Constructs a new instance.

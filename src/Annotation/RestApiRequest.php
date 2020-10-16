@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\api_tools\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
+use Drupal\Core\Annotation\Translation;
 
 /**
  * Defines druidfi_api_tools.api_request annotation object.
@@ -18,7 +19,7 @@ class RestApiRequest extends Plugin {
    *
    * @var string
    */
-  public $id;
+  public string $id;
 
   /**
    * The description of the plugin.
@@ -27,6 +28,6 @@ class RestApiRequest extends Plugin {
    *
    * @ingroup plugin_translatable
    */
-  public $description;
+  public Translation $description;
 
 }

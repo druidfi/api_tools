@@ -14,7 +14,7 @@ abstract class Response {
    *
    * @var \Drupal\api_tools\Response\Debug
    */
-  private $debug;
+  private Debug $debug;
 
   /**
    * Creates a new request with this debugging information.

@@ -14,7 +14,7 @@ final class RequestFactory {
    *
    * @var \Drupal\api_tools\Rest\ApiRequestPluginManager
    */
-  private $requestManager;
+  private ApiRequestPluginManager $requestManager;
 
   /**
    * Constructs a new instance.

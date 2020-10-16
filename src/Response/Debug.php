@@ -14,14 +14,14 @@ final class Debug {
    *
    * @var string
    */
-  protected $description;
+  protected string $description;
 
   /**
    * The improvement instructions.
    *
    * @var string[]
    */
-  protected $instructions = [];
+  protected array $instructions = [];
 
   /**
    * Constructs a new instance.

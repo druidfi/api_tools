@@ -14,14 +14,14 @@ final class ResponseEntity {
    *
    * @var int
    */
-  public $id;
+  public int $id;
 
   /**
    * The title.
    *
    * @var string
    */
-  public $title;
+  public string $title;
 
   /**
    * Constructs a new instance.

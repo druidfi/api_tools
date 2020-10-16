@@ -25,14 +25,14 @@ final class ApiManager {
    *
    * @var \GuzzleHttp\ClientInterface
    */
-  protected $client;
+  protected ClientInterface $client;
 
   /**
    * The logger.
    *
    * @var \Psr\Log\LoggerInterface
    */
-  protected $logger;
+  protected LoggerInterface $logger;
 
   /**
    * Constructs a new instance.
@@ -79,7 +79,7 @@ final class ApiManager {
         );
       throw new ErrorResponseException($response);
     }
-    catch (\Exception $e) {
+    catch (\Exception | \Throwable $e) {
       /** @var \Drupal\api_tools\Response\ErrorResponse $response */
       $response = (new ErrorResponse())
         ->withResponseDebug(

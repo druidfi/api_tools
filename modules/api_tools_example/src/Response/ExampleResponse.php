@@ -18,7 +18,7 @@ final class ExampleResponse extends SuccessResponse {
    *
    * @var array|\Drupal\api_tools_example\Mock\ResponseEntity[]
    */
-  protected $entities = [];
+  protected array $entities = [];
 
   /**
    * Constructs a new instance.

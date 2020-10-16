@@ -51,7 +51,7 @@ final class Example extends ApiRequestBase {
    * @param int $num
    *   The number of requests to make.
    *
-   * @return \Generator|\Drupal\api_tools_example\Response\ExampleResponse[]
+   * @yield \Drupal\api_tools_example\Response\ExampleResponse
    *   The response.
    */
   public function getMultipleExampleData(int $num) : Generator {
