@@ -35,8 +35,8 @@ env:
     - PATH="$PATH:$HOME/.composer/vendor/bin"
 
     # Configuration variables.
-    - DRUPAL_TI_MODULE_NAME="druidfi_api_tools"
-    - DRUPAL_TI_SIMPLETEST_GROUP="druidfi_api_tools"
+    - DRUPAL_TI_MODULE_NAME="api_tools"
+    - DRUPAL_TI_SIMPLETEST_GROUP="api_tools"
 
     # The environment to use, supported are: drupal-7, drupal-8
     - DRUPAL_TI_ENVIRONMENT="drupal-8"
