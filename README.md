@@ -1,14 +1,14 @@
 # Druidfi API Tools
 
-[![Build Status](https://travis-ci.com/druidfi/druidfi_api_tools.svg?token=txWjcLf9KNyHm6qjUdsB&branch=8.x-1.x)](https://travis-ci.com/druidfi/druidfi_api_tools)
+[![Build Status](https://travis-ci.com/druidfi/api_tools.svg?token=txWjcLf9KNyHm6qjUdsB&branch=8.x-1.x)](https://travis-ci.com/druidfi/api_tools)
 
 ## Usage
 
-See [modules/druidfi_api_tools_example](modules/druidfi_api_tools_example) for a complete example.
+See [modules/api_tools_example](modules/api_tools_example) for a complete example.
 
-At minimum, you have to create `@RestApiRequest` plugin and a corresponding Response object. 
+At minimum, you have to create `@RestApiRequest` plugin and a corresponding Response object.
 
-For example: 
+For example:
 
 `yourmodule/src/Plugin/RestApiRequest/Example.php`:
 
@@ -19,8 +19,8 @@ declare(strict_types = 1);
 
 namespace Drupal\yourmodule\Plugin\RestApiRequest;
 
-use Drupal\druidfi_api_tools\Request\Request;
-use Drupal\druidfi_api_tools\Rest\ApiRequestBase;
+use Drupal\api_tools\Request\Request;
+use Drupal\api_tools\Rest\ApiRequestBase;
 use Drupal\yourmodule\Response\ExampleResponse;
 use Generator;
 use League\Uri\Uri;
@@ -43,11 +43,11 @@ final class Example extends ApiRequestBase {
 
   public function getMultiplePosts(array $ids) : Generator {
     $requests = [];
-    
+
     foreach ($ids as $id) {
       $requests[] = new Request($this->getUri($id));
     }
-    
+
     // Send all requests asynchronously and wait for all of them to finish.
     yield from $this->requestMultiple($requests, function (ResponseInterface $response) {
       $json = \GuzzleHttp\json_decode($response->getBody()->getContents());
@@ -77,7 +77,7 @@ declare(strict_types = 1);
 
 namespace Drupal\yourmodule\Response;
 
-use Drupal\druidfi_api_tools\Response\SuccessResponse;
+use Drupal\api_tools\Response\SuccessResponse;
 
 final class ExampleResponse extends SuccessResponse {
 
@@ -99,8 +99,8 @@ To use the rest plugin:
 ```php
 <?php
 
-/** @var \Drupal\druidfi_api_tools\Rest\RequestFactory $factory */
-$factory = \Drupal::service('druidfi_api_tools.rest.request_factory');
+/** @var \Drupal\api_tools\Rest\RequestFactory $factory */
+$factory = \Drupal::service('api_tools.rest.request_factory');
 $manager = $factory->create('example');
 /** @var \Drupal\yourmodule\Response\ExampleResponse $postResponse */
 $postResponse = $manager->getPost(1);
