@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Request;
+namespace Drupal\api_tools\Request;
 
 use League\Uri\Contracts\UriInterface;
 

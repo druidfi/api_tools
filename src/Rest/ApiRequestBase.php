@@ -2,24 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Rest;
+namespace Drupal\api_tools\Rest;
 
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\druidfi_api_tools\Request\Request;
-use Drupal\druidfi_api_tools\Response\Response;
+use Drupal\api_tools\Request\Request;
+use Drupal\api_tools\Response\Response;
 use Generator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Base class for druidfi_api_tools.api_request_manager plugins.
+ * Base class for api_tools.api_request_manager plugins.
  */
 abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * The api manager.
    *
-   * @var \Drupal\druidfi_api_tools\Rest\ApiManager
+   * @var \Drupal\api_tools\Rest\ApiManager
    */
   protected $apiManager;
 
@@ -32,7 +32,7 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
    *   The plugin id.
    * @param array $plugin_definition
    *   The plugin definition.
-   * @param \Drupal\druidfi_api_tools\Rest\ApiManager $apiManager
+   * @param \Drupal\api_tools\Rest\ApiManager $apiManager
    *   The api manager.
    */
   public function __construct(array $configuration, string $plugin_id, array $plugin_definition, ApiManager $apiManager) {
@@ -49,7 +49,7 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('druidfi_api_tools.rest.api_manager')
+      $container->get('api_tools.rest.api_manager')
     );
   }
 

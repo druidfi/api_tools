@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\druidfi_api_tools\Kernel;
+namespace Drupal\Tests\api_tools\Kernel;
 
-use Drupal\druidfi_api_tools\Rest\RequestFactory;
-use Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example;
-use Drupal\druidfi_api_tools_example\Response\ExampleResponse;
+use Drupal\api_tools\Rest\RequestFactory;
+use Drupal\api_tools_example\Plugin\RestApiRequest\Example;
+use Drupal\api_tools_example\Response\ExampleResponse;
 use Drupal\KernelTests\KernelTestBase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -16,7 +16,7 @@ use GuzzleHttp\Psr7\Response;
 /**
  * Tests requests.
  *
- * @group druidfi_api_tools
+ * @group api_tools
  */
 class RequestTest extends KernelTestBase {
 
@@ -24,8 +24,8 @@ class RequestTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
-    'druidfi_api_tools',
-    'druidfi_api_tools_example',
+    'api_tools',
+    'api_tools_example',
   ];
 
   /**
@@ -34,7 +34,7 @@ class RequestTest extends KernelTestBase {
    * @param \GuzzleHttp\Psr7\Response[] $responses
    *   The responses.
    *
-   * @return \Drupal\druidfi_api_tools\Rest\RequestFactory
+   * @return \Drupal\api_tools\Rest\RequestFactory
    *   The request factory.
    */
   private function getMockRequestFactory(array $responses) : RequestFactory {
@@ -43,8 +43,8 @@ class RequestTest extends KernelTestBase {
     $client = new Client(['handler' => $handlerStack]);
     $this->container->set('http_client', $client);
 
-    /** @var \Drupal\druidfi_api_tools\Rest\RequestFactory $requestFactory */
-    $requestFactory = $this->container->get('druidfi_api_tools.rest.request_factory');
+    /** @var \Drupal\api_tools\Rest\RequestFactory $requestFactory */
+    $requestFactory = $this->container->get('api_tools.rest.request_factory');
 
     return $requestFactory;
   }
@@ -61,9 +61,9 @@ class RequestTest extends KernelTestBase {
         ],
       ])),
     ]);
-    /** @var \Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example $manager */
+    /** @var \Drupal\api_tools_example\Plugin\RestApiRequest\Example $manager */
     $manager = $requestFactory->create(Example::class);
-    /** @var \Drupal\druidfi_api_tools_example\Response\ExampleResponse $response */
+    /** @var \Drupal\api_tools_example\Response\ExampleResponse $response */
     $response = $manager->getExampleData();
 
     $this->assertInstanceOf(ExampleResponse::class, $response);
@@ -95,9 +95,9 @@ class RequestTest extends KernelTestBase {
         ],
       ])),
     ]);
-    /** @var \Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example $manager */
+    /** @var \Drupal\api_tools_example\Plugin\RestApiRequest\Example $manager */
     $manager = $requestFactory->create(Example::class);
-    /** @var \Drupal\druidfi_api_tools_example\Response\ExampleResponse[] $responses */
+    /** @var \Drupal\api_tools_example\Response\ExampleResponse[] $responses */
     $responses = $manager->getMultipleExampleData(3);
 
     $processedResponses = 0;
@@ -121,9 +121,9 @@ class RequestTest extends KernelTestBase {
         'entity' => ['id' => 10, 'title' => 'Test 2'],
       ])),
     ]);
-    /** @var \Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example $manager */
+    /** @var \Drupal\api_tools_example\Plugin\RestApiRequest\Example $manager */
     $manager = $requestFactory->create(Example::class);
-    /** @var \Drupal\druidfi_api_tools_example\Response\ExampleResponse $response */
+    /** @var \Drupal\api_tools_example\Response\ExampleResponse $response */
     $response = $manager->postExampleData(['id' => 10, 'title' => 'Test2']);
 
     $this->assertInstanceOf(ExampleResponse::class, $response);
@@ -143,15 +143,13 @@ class RequestTest extends KernelTestBase {
         'entity' => ['id' => 5, 'title' => 'Test 5'],
       ])),
     ]);
-    /** @var \Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example $manager */
+    /** @var \Drupal\api_tools_example\Plugin\RestApiRequest\Example $manager */
     $manager = $requestFactory->create(Example::class);
     $response = $manager->postMultipleExampleData([
       ['id' => 1, 'title' => 'Test'],
       ['id' => 3, 'title' => 'Test 3'],
       ['id' => 5, 'title' => 'Test 5'],
     ]);
-
-    // var_dump($response);
 
     $this->assertInstanceOf(ExampleResponse::class, $response);
     $this->assertEquals(3, count($response->getEntities()));

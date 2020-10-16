@@ -1,0 +1,16 @@
+services:
+  logger.channel.api_tools:
+    parent: logger.channel_base
+    arguments: ['api_tools']
+
+  plugin.manager.api_tools.rest.api_request_manager:
+    class: Drupal\api_tools\Rest\ApiRequestPluginManager
+    parent: default_plugin_manager
+
+  api_tools.rest.api_manager:
+    class: Drupal\api_tools\Rest\ApiManager
+    arguments: ['@http_client', '@logger.channel.api_tools']
+
+  api_tools.rest.request_factory:
+    class: Drupal\api_tools\Rest\RequestFactory
+    arguments: ['@plugin.manager.api_tools.rest.api_request_manager']

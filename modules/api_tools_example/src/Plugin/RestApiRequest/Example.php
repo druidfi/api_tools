@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools_example\Plugin\RestApiRequest;
+namespace Drupal\api_tools_example\Plugin\RestApiRequest;
 
 use Drupal\Core\Url;
-use Drupal\druidfi_api_tools\Request\Request;
-use Drupal\druidfi_api_tools\Rest\ApiRequestBase;
-use Drupal\druidfi_api_tools_example\Mock\ResponseEntity;
-use Drupal\druidfi_api_tools_example\Response\ExampleResponse;
+use Drupal\api_tools\Request\Request;
+use Drupal\api_tools\Rest\ApiRequestBase;
+use Drupal\api_tools_example\Mock\ResponseEntity;
+use Drupal\api_tools_example\Response\ExampleResponse;
 use Generator;
 use League\Uri\Uri;
 use Psr\Http\Message\ResponseInterface;
@@ -17,8 +17,8 @@ use Psr\Http\Message\ResponseInterface;
  * Example API request.
  *
  * @RestApiRequest(
- *   id = "Drupal\druidfi_api_tools_example\Plugin\RestApiRequest\Example",
- *   description = "Demostrates how to use 'druidfi_api_tools' module.",
+ *   id = "Drupal\api_tools_example\Plugin\RestApiRequest\Example",
+ *   description = "Demostrates how to use 'api_tools' module.",
  * )
  */
 final class Example extends ApiRequestBase {
@@ -30,13 +30,13 @@ final class Example extends ApiRequestBase {
    *   The uri.
    */
   private function getUri() : Uri {
-    return Uri::createFromString(Url::fromRoute('druidfi_api_tools_example.example')->toString());
+    return Uri::createFromString(Url::fromRoute('api_tools_example.example')->toString());
   }
 
   /**
    * Gets the example data.
    *
-   * @return \Drupal\druidfi_api_tools_example\Response\ExampleResponse
+   * @return \Drupal\api_tools_example\Response\ExampleResponse
    *   The response.
    */
   public function getExampleData() : ExampleResponse {
@@ -51,7 +51,7 @@ final class Example extends ApiRequestBase {
    * @param int $num
    *   The number of requests to make.
    *
-   * @return \Generator|\Drupal\druidfi_api_tools_example\Response\ExampleResponse[]
+   * @return \Generator|\Drupal\api_tools_example\Response\ExampleResponse[]
    *   The response.
    */
   public function getMultipleExampleData(int $num) : Generator {
@@ -60,7 +60,7 @@ final class Example extends ApiRequestBase {
     for ($i = 0; $i < $num; $i++) {
       $requests[] = new Request($this->getUri());
     }
-    /** @var \Drupal\druidfi_api_tools_example\Response\ExampleResponse[] $data */
+    /** @var \Drupal\api_tools_example\Response\ExampleResponse[] $data */
     $data = $this->requestMultiple($requests, function (ResponseInterface $response) {
       $json = \GuzzleHttp\json_decode($response->getBody()->getContents());
 
@@ -80,7 +80,7 @@ final class Example extends ApiRequestBase {
    * @param array $data
    *   The data to send.
    *
-   * @return \Drupal\druidfi_api_tools_example\Response\ExampleResponse
+   * @return \Drupal\api_tools_example\Response\ExampleResponse
    *   The response.
    */
   public function postExampleData(array $data) : ExampleResponse {
@@ -93,7 +93,7 @@ final class Example extends ApiRequestBase {
    * @param array $data
    *   The data to send.
    *
-   * @return \Drupal\druidfi_api_tools_example\Response\ExampleResponse
+   * @return \Drupal\api_tools_example\Response\ExampleResponse
    *   The response.
    */
   public function postMultipleExampleData(array $data) : ExampleResponse {

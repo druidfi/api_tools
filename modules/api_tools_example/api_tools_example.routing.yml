@@ -1,0 +1,7 @@
+api_tools_example.example:
+  path: '/api-tools-example/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\api_tools_example\Controller\ExampleController::get'
+  requirements:
+    _permission: 'access content'

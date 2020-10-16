@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Response;
+namespace Drupal\api_tools\Response;
 
 /**
  * Defines an API response's debugging information.

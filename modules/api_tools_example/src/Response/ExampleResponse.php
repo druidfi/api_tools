@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools_example\Response;
+namespace Drupal\api_tools_example\Response;
 
-use Drupal\druidfi_api_tools\Response\SuccessResponse;
-use Drupal\druidfi_api_tools_example\Mock\ResponseEntity;
+use Drupal\api_tools\Response\SuccessResponse;
+use Drupal\api_tools_example\Mock\ResponseEntity;
 use Webmozart\Assert\Assert;
 
 /**
@@ -16,14 +16,14 @@ final class ExampleResponse extends SuccessResponse {
   /**
    * The entities.
    *
-   * @var array|\Drupal\druidfi_api_tools_example\Mock\ResponseEntity[]
+   * @var array|\Drupal\api_tools_example\Mock\ResponseEntity[]
    */
   protected $entities = [];
 
   /**
    * Constructs a new instance.
    *
-   * @param \Drupal\druidfi_api_tools_example\Mock\ResponseEntity[] $entities
+   * @param \Drupal\api_tools_example\Mock\ResponseEntity[] $entities
    *   The entities.
    */
   public function __construct(array $entities) {
@@ -35,7 +35,7 @@ final class ExampleResponse extends SuccessResponse {
   /**
    * Adds the given entity.
    *
-   * @param \Drupal\druidfi_api_tools_example\Mock\ResponseEntity $entity
+   * @param \Drupal\api_tools_example\Mock\ResponseEntity $entity
    *   The entity.
    *
    * @return $this
@@ -50,7 +50,7 @@ final class ExampleResponse extends SuccessResponse {
   /**
    * Gets the entities.
    *
-   * @return \Drupal\druidfi_api_tools_example\Mock\ResponseEntity[]
+   * @return \Drupal\api_tools_example\Mock\ResponseEntity[]
    *   The entities.
    */
   public function getEntities() : array {

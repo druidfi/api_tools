@@ -1,8 +1,8 @@
-name: 'Druidfi API tools example'
+name: 'API tools example'
 description: ''
 type: module
 core: 8.x
 package: 'Custom'
 core_version_requirement: ^8 || ^9
 dependencies:
-  - druidfi_api_tools
+  - api_tools

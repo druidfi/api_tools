@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools_example\Request;
+namespace Drupal\api_tools_example\Request;
 
-use Drupal\druidfi_api_tools\Request\Request;
+use Drupal\api_tools\Request\Request;
 
 /**
  * Provides an example request.

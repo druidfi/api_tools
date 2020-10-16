@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Annotation;
+namespace Drupal\api_tools\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
 

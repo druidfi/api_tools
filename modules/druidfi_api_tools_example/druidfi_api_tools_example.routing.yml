@@ -1,7 +1,0 @@
-druidfi_api_tools_example.example:
-  path: '/druidfi-api-tools-example/example'
-  defaults:
-    _title: 'Example'
-    _controller: '\Drupal\druidfi_api_tools_example\Controller\ExampleController::get'
-  requirements:
-    _permission: 'access content'

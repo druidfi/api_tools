@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Rest;
+namespace Drupal\api_tools\Rest;
 
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -29,11 +29,11 @@ class ApiRequestPluginManager extends DefaultPluginManager {
       'Plugin/RestApiRequest',
       $namespaces,
       $module_handler,
-      'Drupal\druidfi_api_tools\Rest\ApiRequestBase',
-      'Drupal\druidfi_api_tools\Annotation\RestApiRequest'
+      'Drupal\api_tools\Rest\ApiRequestBase',
+      'Drupal\api_tools\Annotation\RestApiRequest'
     );
-    $this->alterInfo('druidfi_api_tools.rest.api_request_manager_info');
-    $this->setCacheBackend($cache_backend, 'druidfi_api_tools.rest.api_request_manager_plugins');
+    $this->alterInfo('api_tools.rest.api_request_manager_info');
+    $this->setCacheBackend($cache_backend, 'api_tools.rest.api_request_manager_plugins');
   }
 
 }

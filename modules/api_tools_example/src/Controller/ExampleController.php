@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\druidfi_api_tools_example\Controller;
+namespace Drupal\api_tools_example\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools_example\Mock;
+namespace Drupal\api_tools_example\Mock;
 
 /**
  * The mock entity.

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\druidfi_api_tools\Response;
+namespace Drupal\api_tools\Response;
 
 /**
  * Base class for responses.
@@ -12,14 +12,14 @@ abstract class Response {
   /**
    * The debugging information.
    *
-   * @var \Drupal\druidfi_api_tools\Response\Debug
+   * @var \Drupal\api_tools\Response\Debug
    */
   private $debug;
 
   /**
    * Creates a new request with this debugging information.
    *
-   * @param \Drupal\druidfi_api_tools\Response\Debug $debug
+   * @param \Drupal\api_tools\Response\Debug $debug
    *   The debug.
    *
    * @return self
@@ -34,7 +34,7 @@ abstract class Response {
   /**
    * Gets the debugging information.
    *
-   * @return \Drupal\druidfi_api_tools\Response\Debug|null
+   * @return \Drupal\api_tools\Response\Debug|null
    *   The debug or null.
    */
   public function getResponseDebug() : ? Debug {
