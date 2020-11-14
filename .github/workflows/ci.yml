@@ -33,6 +33,7 @@ jobs:
           cd drupal/
           composer config repositories.0 path $CI_PROJECT_DIR
           composer config repositories.1 composer https://packages.drupal.org/8
+          cat composer.json
           composer install
           composer require drupal/$MODULE_NAME
 
