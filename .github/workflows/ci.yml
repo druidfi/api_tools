@@ -31,20 +31,18 @@ jobs:
         run: |
           git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/
           cd drupal/
-          composer --version
-          echo $CI_PROJECT_DIR
-          composer config repositories.module path $CI_PROJECT_DIR || true
+          composer config repositories.module path $GITHUB_WORKSPACE
           composer install
           composer require drupal/$MODULE_NAME
 
       - name: Install Drupal
         run: |
-          php -d sendmail_path=$(which true); drush --root $CI_PROJECT_DIR/drupal --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
-          drush --root $CI_PROJECT_DIR/drupal en simpletest $DRUPAL_MODULE_NAME -y
+          php -d sendmail_path=$(which true); drush --root $GITHUB_WORKSPACE/drupal --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
+          drush --root $GITHUB_WORKSPACE/drupal en simpletest $DRUPAL_MODULE_NAME -y
 
       - name: Run PHPUnit tests
         run: |
           cd drupal/
           drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          vendor/bin/phpunit -c $CI_PROJECT_DIR/phpunit.xml --verbose
+          vendor/bin/phpunit -c $GITHUB_WORKSPACE/phpunit.xml --verbose
