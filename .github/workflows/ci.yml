@@ -4,7 +4,7 @@ env:
   MYSQL_ROOT_PASSWORD: drupal
   SIMPLETEST_DB: "mysql://drupal:drupal@mariadb:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
-  DRUPAL_MODULE_NAME: "test_module"
+  DRUPAL_MODULE_NAME: "api_tools"
   DRUPAL_CORE_VERSION: 9.0.x
 jobs:
   test-contrib:
