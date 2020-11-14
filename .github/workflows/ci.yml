@@ -32,9 +32,8 @@ jobs:
           git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/
           cd drupal/
           composer --version
-          cat composer.json
+          ech $CI_PROJECT_DIR
           composer config repositories.module path $CI_PROJECT_DIR || true
-          cat composer.json
           composer install
           composer require drupal/$MODULE_NAME
 
