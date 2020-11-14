@@ -5,9 +5,7 @@ env:
   SIMPLETEST_DB: "mysql://root:drupal@db:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
   DRUPAL_MODULE_NAME: "api_tools"
-  BASE_DIR: $HOME
-  DRUPAL_ROOT: $BASE_DIR/drupal
-  DRUPAL_CORE: 9.0.x
+  DRUPAL_CORE_VERSION: 9.0.x
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -31,8 +29,8 @@ jobs:
 
       - name: Build project
         run: |
-          cd $BASE_DIR
-          git clone --depth 1 --branch "$DRUPAL_CORE" http://git.drupal.org/project/drupal.git
+          git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git
+          cd drupal/
           composer config repositories.0 path $CI_PROJECT_DIR
           composer config repositories.1 composer https://packages.drupal.org/8
           composer install
@@ -40,11 +38,12 @@ jobs:
 
       - name: Install Drupal
         run: |
-          php -d sendmail_path=$(which true); drush --root $DRUPAL_ROOT --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
-          drush --root $DRUPAL_ROOT en simpletest $DRUPAL_MODULE_NAME -y
+          php -d sendmail_path=$(which true); drush --root $CI_PROJECT_DIR/drupal --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
+          drush --root $CI_PROJECT_DIR/drupal en simpletest $DRUPAL_MODULE_NAME -y
 
       - name: Run PHPUnit tests
         run: |
-          drush runserver $SIMPLETEST_BASE_URL --root $DRUPAL_ROOT > /dev/null 2>&1 &
+          cd drupal/
+          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          $BASE_DIR/vendor/bin/phpunit -c $CI_PROJECT_DIR/phpunit.xml --verbose
+          vendor/bin/phpunit -c $CI_PROJECT_DIR/phpunit.xml --verbose
