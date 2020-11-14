@@ -2,24 +2,28 @@ on: [push]
 name: CI
 env:
   MYSQL_ROOT_PASSWORD: drupal
-  SIMPLETEST_DB: "mysql://root:drupal@db:3306/drupal"
+  SIMPLETEST_DB: "mysql://drupal:drupal@mariadb:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
-  DRUPAL_MODULE_NAME: "api_tools"
+  DRUPAL_MODULE_NAME: "test_module"
   DRUPAL_CORE_VERSION: 9.0.x
 jobs:
-  tests:
+  test-contrib:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        #php-version: ['7.2', '7.3', '7.4']
         php-version: ['7.4']
     container:
       image: ghcr.io/tuutti/drupal-php-docker:${{ matrix.php-version }}
 
     services:
-      db:
-        image: mysql:5.7
+      mariadb:
+        image: mariadb:10.5
+        env:
+          MYSQL_USER: drupal
+          MYSQL_PASSWORD: drupal
+          MYSQL_DATABASE: drupal
+          MYSQL_ROOT_PASSWORD: drupal
         ports:
           - 3306:3306
     steps:
@@ -27,24 +31,17 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Build project
+      - name: Set variables
         run: |
-          git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/
-          cd drupal/
-          composer config repositories.0 path core
-          composer config repositories.1 path $GITHUB_WORKSPACE
-          composer config repositories.2 composer https://packages.drupal.org/8
-          composer install
-          composer require drupal/$MODULE_NAME
+          echo "$HOME/.config/composer/vendor/bin" >> $GITHUB_PATH
 
-      - name: Install Drupal
+      - name: Setup Drupal test runner
         run: |
-          php -d sendmail_path=$(which true); drush --root $GITHUB_WORKSPACE/drupal --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
-          drush --root $GITHUB_WORKSPACE/drupal en simpletest $DRUPAL_MODULE_NAME -y
+          composer global require tuutti/drupal-test-runner ~1.0
 
-      - name: Run PHPUnit tests
+      - name: Setup Drupal
         run: |
-          cd drupal/
-          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
-          chromedriver --port=4444 > /dev/null 2>&1 &
-          vendor/bin/phpunit -c $GITHUB_WORKSPACE/phpunit.xml --verbose
+          drupal-tr
+
+      - name: Run tests
+        run: TEST_RUNNER=core drupal-tr run-tests
