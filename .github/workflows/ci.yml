@@ -29,8 +29,9 @@ jobs:
 
       - name: Build project
         run: |
-          git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git
+          git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/
           cd drupal/
+          composer --version
           composer config repositories.module path $CI_PROJECT_DIR
           composer install
           composer require drupal/$MODULE_NAME
