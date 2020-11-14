@@ -1,6 +1,6 @@
 # Druidfi API Tools
 
-[![Build Status](https://travis-ci.com/druidfi/api_tools.svg?token=txWjcLf9KNyHm6qjUdsB&branch=8.x-1.x)](https://travis-ci.com/druidfi/api_tools)
+[![Tests](https://github.com/druidfi/api_tools/workflows/CI/badge.svg)](https://github.com/druidfi/api_tools/actions)
 
 ## Usage
 
