@@ -5,8 +5,8 @@ env:
   SIMPLETEST_DB: "mysql://root:drupal@db:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
   DRUPAL_MODULE_NAME: "api_tools"
-  BASE_DIR: "$HOME"
-  DRUPAL_ROOT: "$BASE_DIR/drupal"
+  BASE_DIR: $HOME
+  DRUPAL_ROOT: $BASE_DIR/drupal
   DRUPAL_CORE: 9.0.x
 jobs:
   tests:
@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4']
+        #php-version: ['7.2', '7.3', '7.4']
+        php-version: ['7.4']
     container:
       image: ghcr.io/tuutti/drupal-php-docker:${{ matrix.php-version }}
 
