@@ -8,7 +8,7 @@ use Drupal\Component\Annotation\Plugin;
 use Drupal\Core\Annotation\Translation;
 
 /**
- * Defines druidfi_api_tools.api_request annotation object.
+ * Defines api_tools.api_request annotation object.
  *
  * @Annotation
  */
