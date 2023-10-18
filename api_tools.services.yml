@@ -9,7 +9,7 @@ services:
 
   api_tools.rest.api_manager:
     class: Drupal\api_tools\Rest\ApiManager
-    arguments: ['@http_client', '@logger.channel.api_tools']
+    arguments: ['@http_client']
 
   api_tools.rest.request_factory:
     class: Drupal\api_tools\Rest\RequestFactory

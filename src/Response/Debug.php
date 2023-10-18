@@ -10,20 +10,6 @@ namespace Drupal\api_tools\Response;
 final class Debug {
 
   /**
-   * The response description.
-   *
-   * @var string
-   */
-  protected string $description;
-
-  /**
-   * The improvement instructions.
-   *
-   * @var string[]
-   */
-  protected array $instructions = [];
-
-  /**
    * Constructs a new instance.
    *
    * @param string $description
@@ -32,11 +18,9 @@ final class Debug {
    *   The improvement instructions.
    */
   public function __construct(
-    string $description,
-    array $instructions = []
+    private string $description,
+    private array $instructions = []
   ) {
-    $this->description = $description;
-    $this->instructions = $instructions;
   }
 
   /**
@@ -50,12 +34,12 @@ final class Debug {
   }
 
   /**
-   * Gets the improvement instructoins.
+   * Gets the improvement instructions.
    *
    * @return string[]
    *   The improvement instructions.
    */
-  public function getInstructions() {
+  public function getInstructions() : array {
     return $this->instructions;
   }
 
