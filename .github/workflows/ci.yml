@@ -1,24 +1,24 @@
 on: [push]
 name: CI
 env:
-  MYSQL_ROOT_PASSWORD: drupal
-  SIMPLETEST_DB: "mysql://drupal:drupal@mariadb:3306/drupal"
-  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
-  DRUPAL_MODULE_NAME: "api_tools"
-  DRUPAL_CORE_VERSION: 9.0.x
+  SYMFONY_DEPRECATIONS_HELPER: disabled
 jobs:
   test-contrib:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        php-version: ['7.4']
+        php-version: ['8.2']
+        core: ['10.1.x']
+        include:
+          - core: 9.5.x
+            php-version: '8.1'
     container:
       image: ghcr.io/tuutti/drupal-php-docker:${{ matrix.php-version }}
 
     services:
       mariadb:
-        image: mariadb:10.5
+        image: mariadb
         env:
           MYSQL_USER: drupal
           MYSQL_PASSWORD: drupal
@@ -27,21 +27,57 @@ jobs:
         ports:
           - 3306:3306
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - name: Set variables
-        run: |
-          echo "$HOME/.config/composer/vendor/bin" >> $GITHUB_PATH
+      - name: Parse $MODULE_NAME from composer.json
+        run: echo "MODULE_NAME=$(cat composer.json | jq -r .name | awk -F/ '{print $NF}')" >> $GITHUB_ENV
 
-      - name: Setup Drupal test runner
-        run: |
-          composer global require tuutti/drupal-test-runner ~1.0
+      - name: Set DRUPAL_ROOT
+        run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
 
-      - name: Setup Drupal
-        run: |
-          drupal-tr
+      - name: Set MODULE_FOLDER
+        run: echo "MODULE_FOLDER=$DRUPAL_ROOT/modules/contrib/$MODULE_NAME" >> $GITHUB_ENV
 
-      - name: Run tests
-        run: TEST_RUNNER=core drupal-tr run-tests
+      - name: Clone drupal
+        run: git clone --depth 1 --branch "${{ matrix.core }}" https://git.drupal.org/project/drupal.git/ $DRUPAL_ROOT
+
+      - name: Install required composer dependencies
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: |
+          composer config platform.php ${{ matrix.php-version }}
+          composer run-script drupal-phpunit-upgrade
+          composer config repositories.0 path $GITHUB_WORKSPACE
+          composer require drupal/$MODULE_NAME -W
+          composer require "drush/drush ^11.0"
+          # We use COMPOSER_MIRROR_PATH_REPOS=1 to mirror local repository
+          # instead of symlinking it to prevent code coverage issues with
+          # phpunit. Copy .git folder manually so codecov can generate line by
+          # line coverage.
+          cp -r $GITHUB_WORKSPACE/.git $MODULE_FOLDER/
+
+      - name: Install Drupal
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: |
+          php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
+          vendor/bin/drush en $MODULE_NAME -y
+
+      - name: Run PHPCS
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: vendor/bin/phpcs $MODULE_FOLDER --standard=Drupal,DrupalPractice --extensions=php,module,install
+
+      - name: Start services
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: |
+          vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
+
+      - name: Run PHPUnit tests
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: |
+          vendor/bin/phpunit \
+            --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php \
+            -c $MODULE_FOLDER/phpunit.xml \
+            --coverage-clover=$MODULE_FOLDER/coverage.xml \
+            $MODULE_FOLDER
+          codecov --rootDir $MODULE_FOLDER
