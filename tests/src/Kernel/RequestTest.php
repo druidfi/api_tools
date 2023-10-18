@@ -23,7 +23,7 @@ class RequestTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'api_tools',
     'api_tools_example',
   ];

@@ -12,7 +12,7 @@ use Generator;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Promise\PromiseInterface;
-use function GuzzleHttp\Promise\unwrap;
+use GuzzleHttp\Promise\Utils;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -65,7 +65,7 @@ final class ApiManager {
   public function handlePromises(array $promises, callable $callable) : Generator {
     // Wait all promises to be finished.
     try {
-      $results = unwrap($promises);
+      $results = Utils::unwrap($promises);
 
       foreach ($results as $result) {
         yield from $callable($result);
