@@ -6,6 +6,6 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-    "league/uri": "~6.2"
+    "league/uri": "^7.3"
   }
 }
