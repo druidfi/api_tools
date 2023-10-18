@@ -12,29 +12,6 @@ use League\Uri\Contracts\UriInterface;
 class Request {
 
   /**
-   * The method.
-   *
-   * @var string
-   */
-  protected string $method = 'GET';
-
-  /**
-   * The uri.
-   *
-   * @var \League\Uri\Contracts\UriInterface
-   */
-  protected UriInterface $uri;
-
-  /**
-   * The request options.
-   *
-   * @var array
-   *
-   * @see \GuzzleHttp\Client::requestAsync()
-   */
-  protected array $options = [];
-
-  /**
    * Constructs a new instance.
    *
    * @param \League\Uri\Contracts\UriInterface $uri
@@ -44,10 +21,11 @@ class Request {
    * @param array $options
    *   The request options.
    */
-  public function __construct(UriInterface $uri, string $method = 'GET', array $options = []) {
-    $this->uri = $uri;
-    $this->method = $method;
-    $this->options = $options;
+  public function __construct(
+    private UriInterface $uri,
+    private string $method = 'GET',
+    private array $options = []
+  ) {
   }
 
   /**

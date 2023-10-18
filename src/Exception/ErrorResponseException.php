@@ -5,19 +5,11 @@ declare(strict_types = 1);
 namespace Drupal\api_tools\Exception;
 
 use Drupal\api_tools\Response\ErrorResponse;
-use Throwable;
 
 /**
  * An exception for ErrorResponse responses.
  */
 final class ErrorResponseException extends \Exception {
-
-  /**
-   * The response.
-   *
-   * @var \Drupal\api_tools\Response\ErrorResponse
-   */
-  private $response;
 
   /**
    * Constructs a new instance.
@@ -27,9 +19,7 @@ final class ErrorResponseException extends \Exception {
    * @param \Throwable|null $previous
    *   The throwable.
    */
-  public function __construct(ErrorResponse $response, Throwable $previous = NULL) {
-    $this->response = $response;
-
+  public function __construct(private ErrorResponse $response, \Throwable $previous = NULL) {
     $message = '';
 
     if ($response->getResponseDebug()) {
@@ -44,7 +34,7 @@ final class ErrorResponseException extends \Exception {
    * @return \Drupal\api_tools\Response\ErrorResponse
    *   The response.
    */
-  public function getResposne(): ErrorResponse {
+  public function getResponse(): ErrorResponse {
     return $this->response;
   }
 

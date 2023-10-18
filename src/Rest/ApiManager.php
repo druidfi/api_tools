@@ -4,16 +4,14 @@ declare(strict_types = 1);
 
 namespace Drupal\api_tools\Rest;
 
+use Drupal\api_tools\Exception\ErrorResponseException;
 use Drupal\api_tools\Request\Request;
 use Drupal\api_tools\Response\Debug;
 use Drupal\api_tools\Response\ErrorResponse;
-use Drupal\api_tools\Exception\ErrorResponseException;
-use Generator;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\Utils;
-use Psr\Log\LoggerInterface;
 
 /**
  * Provides connector for sending API requests to Portal API.
@@ -21,30 +19,12 @@ use Psr\Log\LoggerInterface;
 final class ApiManager {
 
   /**
-   * The http client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $client;
-
-  /**
-   * The logger.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected LoggerInterface $logger;
-
-  /**
    * Constructs a new instance.
    *
-   * @param \GuzzleHttp\ClientInterface $httpClient
+   * @param \GuzzleHttp\ClientInterface $client
    *   The http client.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   The logger.
    */
-  public function __construct(ClientInterface $httpClient, LoggerInterface $logger) {
-    $this->client = $httpClient;
-    $this->logger = $logger;
+  public function __construct(private ClientInterface $client) {
   }
 
   /**
@@ -62,7 +42,7 @@ final class ApiManager {
    *
    * @throws \Drupal\api_tools\Exception\ErrorResponseException
    */
-  public function handlePromises(array $promises, callable $callable) : Generator {
+  public function handlePromises(array $promises, callable $callable) : \Generator {
     // Wait all promises to be finished.
     try {
       $results = Utils::unwrap($promises);

@@ -4,12 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\api_tools_example\Plugin\RestApiRequest;
 
-use Drupal\Core\Url;
 use Drupal\api_tools\Request\Request;
 use Drupal\api_tools\Rest\ApiRequestBase;
 use Drupal\api_tools_example\Mock\ResponseEntity;
 use Drupal\api_tools_example\Response\ExampleResponse;
-use Generator;
+use Drupal\Core\Url;
 use League\Uri\Uri;
 use Psr\Http\Message\ResponseInterface;
 
@@ -54,7 +53,7 @@ final class Example extends ApiRequestBase {
    * @yield \Drupal\api_tools_example\Response\ExampleResponse
    *   The response.
    */
-  public function getMultipleExampleData(int $num) : Generator {
+  public function getMultipleExampleData(int $num) : \Generator {
     $requests = [];
 
     for ($i = 0; $i < $num; $i++) {

@@ -4,24 +4,16 @@ declare(strict_types = 1);
 
 namespace Drupal\api_tools\Rest;
 
-use Drupal\Component\Plugin\PluginBase;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\api_tools\Request\Request;
 use Drupal\api_tools\Response\Response;
-use Generator;
+use Drupal\Component\Plugin\PluginBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for rest request plugins.
  */
 abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * The api manager.
-   *
-   * @var \Drupal\api_tools\Rest\ApiManager
-   */
-  protected ApiManager $apiManager;
 
   /**
    * Constructs a new instance.
@@ -35,16 +27,14 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
    * @param \Drupal\api_tools\Rest\ApiManager $apiManager
    *   The api manager.
    */
-  public function __construct(array $configuration, string $plugin_id, array $plugin_definition, ApiManager $apiManager) {
-    $this->apiManager = $apiManager;
-
+  public function __construct(array $configuration, string $plugin_id, array $plugin_definition, protected ApiManager $apiManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) : static {
     return new static(
       $configuration,
       $plugin_id,
@@ -85,7 +75,7 @@ abstract class ApiRequestBase extends PluginBase implements ContainerFactoryPlug
    *
    * @throws \Drupal\api_tools\Exception\ErrorResponseException
    */
-  public function requestMultiple(array $requests, callable $callback): Generator {
+  public function requestMultiple(array $requests, callable $callback): \Generator {
     $promises = [];
 
     foreach ($requests as $request) {

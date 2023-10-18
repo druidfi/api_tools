@@ -131,6 +131,9 @@ class RequestTest extends KernelTestBase {
     $this->assertEquals('Test 2', $response->getEntities()[0]->title);
   }
 
+  /**
+   * Tests post requests.
+   */
   public function testPostRequests() {
     $requestFactory = $this->getMockRequestFactory([
       new Response(200, [], json_encode([
@@ -157,4 +160,3 @@ class RequestTest extends KernelTestBase {
   }
 
 }
-

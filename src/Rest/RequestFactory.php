@@ -10,20 +10,12 @@ namespace Drupal\api_tools\Rest;
 final class RequestFactory {
 
   /**
-   * The request plugin manager.
-   *
-   * @var \Drupal\api_tools\Rest\ApiRequestPluginManager
-   */
-  private ApiRequestPluginManager $requestManager;
-
-  /**
    * Constructs a new instance.
    *
-   * @param \Drupal\api_tools\Rest\ApiRequestPluginManager $apiRequestManager
+   * @param \Drupal\api_tools\Rest\ApiRequestPluginManager $requestManager
    *   The api request manager.
    */
-  public function __construct(ApiRequestPluginManager $apiRequestManager) {
-    $this->requestManager = $apiRequestManager;
+  public function __construct(private ApiRequestPluginManager $requestManager) {
   }
 
   /**
@@ -42,4 +34,3 @@ final class RequestFactory {
   }
 
 }
-
