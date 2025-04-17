@@ -9,6 +9,7 @@ use Drupal\api_tools\Rest\ApiRequestBase;
 use Drupal\api_tools_example\Mock\ResponseEntity;
 use Drupal\api_tools_example\Response\ExampleResponse;
 use Drupal\Core\Url;
+use GuzzleHttp\Utils;
 use League\Uri\Uri;
 use Psr\Http\Message\ResponseInterface;
 
@@ -29,7 +30,7 @@ final class Example extends ApiRequestBase {
    *   The uri.
    */
   private function getUri() : Uri {
-    return Uri::createFromString(Url::fromRoute('api_tools_example.example')->toString());
+    return Uri::new(Url::fromRoute('api_tools_example.example')->toString());
   }
 
   /**
@@ -61,7 +62,7 @@ final class Example extends ApiRequestBase {
     }
     /** @var \Drupal\api_tools_example\Response\ExampleResponse[] $data */
     $data = $this->requestMultiple($requests, function (ResponseInterface $response) {
-      $json = \GuzzleHttp\json_decode($response->getBody()->getContents());
+      $json = Utils::jsonDecode($response->getBody()->getContents());
 
       $entities = [];
       foreach ($json->entities as $item) {
@@ -105,7 +106,7 @@ final class Example extends ApiRequestBase {
     }
 
     $entities = $this->requestMultiple($requests, function (ResponseInterface $response) {
-      $json = \GuzzleHttp\json_decode($response->getBody()->getContents());
+      $json = Utils::jsonDecode($response->getBody()->getContents());
 
       yield new ResponseEntity($json->entity->id, $json->entity->title);
     });
