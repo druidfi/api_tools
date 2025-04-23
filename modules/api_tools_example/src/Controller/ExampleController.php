@@ -5,6 +5,7 @@ namespace Drupal\api_tools_example\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Utils;
 
 /**
  * Returns responses for Druidfi API tools example routes.
@@ -29,7 +30,7 @@ class ExampleController extends ControllerBase {
       return new JsonResponse($response + [
         'method' => $request->getMethod(),
         // Send entity back as it is.
-        'entity' => \GuzzleHttp\json_decode($request->getContent()),
+        'entity' => Utils::jsonDecode($request->getContent()),
       ]);
     }
     return new JsonResponse($response + [
